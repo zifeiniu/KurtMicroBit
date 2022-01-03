@@ -2,7 +2,7 @@ input.onGesture(Gesture.TiltLeft, function () {
     serial.writeValue("zq", open2)
 })
 input.onButtonPressed(Button.A, function () {
-    basic.showIcon(IconNames.Yes)
+    basic.showIcon(IconNames.StickFigure)
     deley += 10
     serial.writeValue("a", deley)
 })
@@ -17,7 +17,6 @@ input.onGesture(Gesture.FreeFall, function () {
 })
 input.onButtonPressed(Button.B, function () {
     basic.showIcon(IconNames.No)
-    deley += -10
     serial.writeValue("b", deley)
 })
 input.onGesture(Gesture.ThreeG, function () {
@@ -30,10 +29,9 @@ let open2 = 0
 let deley = 0
 serial.redirectToUSB()
 serial.setTxBufferSize(64)
-deley = 10
+deley = 0
 basic.showIcon(IconNames.Heart)
 basic.forever(function () {
-    led.setBrightness(input.soundLevel())
     serial.writeValue("znz", input.compassHeading())
     basic.pause(deley)
     serial.writeValue("cx", input.magneticForce(Dimension.X))
@@ -52,5 +50,6 @@ basic.forever(function () {
     basic.pause(deley)
     serial.writeValue("ld", input.lightLevel())
     basic.pause(deley)
-    serial.writeValue("ld", input.temperature())
+    serial.writeValue("wd", input.temperature())
+    basic.pause(deley)
 })
