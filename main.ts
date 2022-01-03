@@ -1,31 +1,39 @@
 input.onGesture(Gesture.TiltLeft, function () {
-    serial.writeValue("zq", open)
+    serial.writeValue("zq", open2)
 })
 input.onButtonPressed(Button.A, function () {
-    serial.writeValue("a", open)
+    basic.showIcon(IconNames.Yes)
+    deley += 10
+    serial.writeValue("a", deley)
 })
 input.onGesture(Gesture.Shake, function () {
-    serial.writeValue("zd", open)
+    serial.writeValue("zd", open2)
 })
 input.onButtonPressed(Button.AB, function () {
-    input.calibrateCompass()
+	
 })
 input.onGesture(Gesture.FreeFall, function () {
-    serial.writeValue("zylt", open)
+    serial.writeValue("zylt", open2)
 })
 input.onButtonPressed(Button.B, function () {
-    serial.writeValue("b", open)
+    basic.showIcon(IconNames.No)
+    deley += -10
+    serial.writeValue("b", deley)
 })
 input.onGesture(Gesture.ThreeG, function () {
-    serial.writeValue("3g", open)
+    serial.writeValue("3g", open2)
 })
 input.onGesture(Gesture.TiltRight, function () {
-    serial.writeValue("yq", open)
+    serial.writeValue("yq", open2)
 })
-let open = 0
+let open2 = 0
+let deley = 0
 serial.redirectToUSB()
-let deley = 50
+serial.setTxBufferSize(64)
+deley = 10
+basic.showIcon(IconNames.Heart)
 basic.forever(function () {
+    led.setBrightness(input.soundLevel())
     serial.writeValue("znz", input.compassHeading())
     basic.pause(deley)
     serial.writeValue("cx", input.magneticForce(Dimension.X))
@@ -42,4 +50,7 @@ basic.forever(function () {
     basic.pause(deley)
     serial.writeValue("jqd", input.acceleration(Dimension.Strength))
     basic.pause(deley)
+    serial.writeValue("ld", input.lightLevel())
+    basic.pause(deley)
+    serial.writeValue("ld", input.temperature())
 })
